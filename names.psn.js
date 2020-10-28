@@ -38,19 +38,25 @@
 
     function createName(tile)
     {
+        if (tile.find(".title-tile").length  === 0) {
         let name = tile.find(".psw-image img:first").prop('alt');
-        tile.find(".ems-sdk-product-tile__details").append("<span style='    font-size: 12px;    display: inline-block;    line-height: 17px;'>" + name + "</span>");
+        tile.find(".ems-sdk-product-tile__details")
+            .append("<span class='title-tile' style='    font-size: 12px;    display: inline-block;    line-height: 17px;'>" + name + "</span>");
+        }
     }
 
     injectLodash(function () {
         injectJQuery(function() {
-            jQuery("body").prepend("<button class='get-names' style='position: fixed;z-index: 100000;top: 20px;right: 250px;border: solid 1px;padding: 10px;'>GET NAMES</button>");
-            jQuery('button.get-names').on("click",function () {
+            let interval = window.setInterval(function () {
+                if (jQuery("img.psw-fade-in").length > 0) {
                 jQuery("ul li.cell").prop("style", "min-height:250px");
-                _.each(getAllTiles(), function(tile) {
+                    _.each(getAllTiles(), function(tile) {
                     createName(jQuery(tile));
-                })}
-               );
+                    }
+                          );
+//                    clearInterval(interval);
+                }
+            }, 1500);
         });
     });
 
